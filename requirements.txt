@@ -1,0 +1,4 @@
+setuptools
+streamlit==1.42.0
+numpy==1.23.5
+git+https://github.com/medicationforall/cqterrain@3.0.0
