@@ -9,7 +9,7 @@ The streamlit application allows you to define the dimensions of your Crystal te
 
 [![](01.png)](https://crsystalgenerator.streamlit.app//)
 
-View the demo [walkwaygenerator.streamlit.app](https://crystalgenerator.streamlit.app//)
+View the demo [crystalgenerator.streamlit.app](https://crystalgenerator.streamlit.app//)
 
 ### Features
 * Modify size and attributes for the crystal terrain
