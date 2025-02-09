@@ -131,3 +131,6 @@ dmypy.json
 model.*
 model_*.*
 preview.svg
+
+app/static/*.stl
+app/static/*.step

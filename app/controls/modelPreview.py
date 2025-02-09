@@ -16,8 +16,13 @@ import streamlit as st
 import streamlit.components.v1 as components
 import os
 import time
+from pathlib import Path
 
 #EXPORT_NAME = 'model_crystal'
+
+
+def skip_update():
+    st.session_state['skip_update']=True
 
 def __stl_preview(color, render,auto_rotate='true', export_name='model_crystal'):
     # Load and embed the JavaScript file
@@ -52,6 +57,9 @@ def __stl_preview(color, render,auto_rotate='true', export_name='model_crystal')
         height = 500
     )
 
+def generate_model():
+    st.session_state['update_model']=True
+
 def make_model_preview(
     color,
     render,
@@ -60,16 +68,34 @@ def make_model_preview(
     auto_rotate='true',
     export_name='model_crystal'
 ):
-    if f'{export_name}.{export_type}' not in os.listdir():
+    session_id = st.session_state['session_id']
+    file_path = Path(f'./app/static/{export_name}_{session_id}.{export_type}')
+
+    if file_path.exists()==False:
         st.error('The program was not able to generate the mesh.', icon="🚨")
     else:
-        with open(f'{export_name}.{export_type}', "rb") as file:
-            btn = st.download_button(
-                    key=key,
-                    label=f"Download {export_type}",
-                    data=file,
-                    file_name=f'{export_name}.{export_type}',
-                    mime=f"model/{export_type}"
-                )
+        col1, col2, col3 = st.columns(3)
+        with open(file_path, "rb") as file:
+            with col1:
+                name = export_name.replace('_',' ')
+                btn = st.download_button(
+                        key=key,
+                        label=f"Download {name} {export_type}",
+                        data=file,
+                        file_name=f'{export_name}.{export_type}',
+                        mime=f"model/{export_type}",
+                        on_click=skip_update
+                    )
+        update = st.session_state.get('update_model',True)
+        with col2:
+            type = 'secondary'
+            if update == False:
+                type = 'primary'
+            generate_button = st.button(f'Generate Model',key=key+"_download",type=type, on_click=generate_model)
+
+        with col3:
+            if update == False:
+                with col3:
+                    st.warning("Pending changes, please generate model")
 
     __stl_preview(color, render, auto_rotate, export_name)
