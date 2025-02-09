@@ -72,11 +72,11 @@ def make_overall_parameters():
         )
 
     with col3:
-            overall_height = st.slider(
-                "Height",
-                key='overall_height',
-                help='Variable Range for the height of the crystals',
-                min_value=0,
-                max_value=100,
-                value=(20, 40)
-            )
+        overall_height = st.slider(
+            "Height",
+            key='overall_height',
+            help='Variable Range for the height of the crystals',
+            min_value=0,
+            max_value=100,
+            value=(20, 40)
+        )

@@ -17,9 +17,9 @@ import streamlit.components.v1 as components
 import os
 import time
 
-EXPORT_NAME = 'model_crystal'
+#EXPORT_NAME = 'model_crystal'
 
-def __stl_preview(color, render,auto_rotate='true'):
+def __stl_preview(color, render,auto_rotate='true', export_name='model_crystal'):
     # Load and embed the JavaScript file
     with open("js/three.min.js", "r") as js_file:
         three_js = js_file.read()
@@ -47,7 +47,7 @@ def __stl_preview(color, render,auto_rotate='true'):
         orbital_controls+' '+
         stl_viewer_component+' '+
         r'</script>'+
-        r'<stl-viewer model="./app/static/'+EXPORT_NAME+"_"+str(session_id)+'.stl?cache='+str(time.time())+r'"></stl-viewer>'+
+        r'<stl-viewer model="./app/static/'+export_name+"_"+str(session_id)+'.stl?cache='+str(time.time())+r'"></stl-viewer>'+
         r'</div>',
         height = 500
     )
@@ -58,17 +58,18 @@ def make_model_preview(
     export_type,
     key="download_crystal",
     auto_rotate='true',
+    export_name='model_crystal'
 ):
-    if f'{EXPORT_NAME}.{export_type}' not in os.listdir():
+    if f'{export_name}.{export_type}' not in os.listdir():
         st.error('The program was not able to generate the mesh.', icon="🚨")
     else:
-        with open(f'{EXPORT_NAME}.{export_type}', "rb") as file:
+        with open(f'{export_name}.{export_type}', "rb") as file:
             btn = st.download_button(
                     key=key,
                     label=f"Download {export_type}",
                     data=file,
-                    file_name=f'{EXPORT_NAME}.{export_type}',
+                    file_name=f'{export_name}.{export_type}',
                     mime=f"model/{export_type}"
                 )
 
-    __stl_preview(color, render, auto_rotate)
+    __stl_preview(color, render, auto_rotate, export_name)

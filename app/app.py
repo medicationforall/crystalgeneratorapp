@@ -24,14 +24,16 @@ from cqterrain.crystal import CrystalWall
 from controls import (
     make_sidebar, 
     make_overall_parameters,
+    make_base_parameters,
     make_model_preview,
     make_code_view
 )
 
 def __make_tabs():
-    preview_tab,crystal_tab, tab_code = st.tabs([
+    preview_tab,crystal_tab, base_tab, tab_code = st.tabs([
         "File Controls",
         "Overall",
+        "Minibase",
         "Code",
         ])
     with preview_tab:
@@ -65,6 +67,17 @@ def __make_tabs():
             auto_rotate
         )
 
+    with base_tab:
+        make_base_parameters()
+        make_model_preview(
+            color1,
+            render,
+            export_type,
+            "model_preview_base",
+            auto_rotate,
+            "mini_base"
+        )
+
     #combine tab parameter into one dictionary
     #parameters:dict = crystal_parameters #| slot_parameters | tab_parameters | rails_parameters | rails_slots_parameters
     #parameters['export_type'] = export_type
@@ -89,6 +102,12 @@ def __make_app():
                 'overall_seed':'zoe',
                 'crystal_count':10,
                 'crystal_margin':10,
+                'base_height': 3,
+                'base_taper': -1,
+                'base_detail_height': 3,
+                'base_uneven_height': 4,
+                'base_peak_count': 10,
+                'base_segments': 6,
                 #'walkway_chamfer':3,
                 'export_type':'stl'
             }
@@ -129,17 +148,18 @@ def __calculate_reverse_chamfer(parameters:dict,chamfer:str,check:str):
     #    st.warning(f'{chamfer_str} {parameters[chamfer]} must be less than {check_str} divided by two {parameters[check]/2}.', icon="⚠️")
     return calulated_chamfer
 
-def resolve_range(parameter,step):
+def resolve_range(parameter,step:float|None):
     if type(parameter) is tuple:
         if parameter[0] == parameter[1]:
             return parameter[0]
-        else:
+        elif step:
             return parameter + (step,)
+        else:
+            return parameter
     else:
         return parameter
 
 def __generate_model(parameters):
-    print(parameters)
     export_type = parameters['export_type']
     session_id = st.session_state['session_id']
 
@@ -156,12 +176,15 @@ def __generate_model(parameters):
     bp_wall.crystal_margin = parameters['crystal_margin']
 
     bp_wall.render_base = True
-    bp_wall.base_height = 3
-    bp_wall.base_taper = -1
+    bp_wall.base_height = parameters['base_height']
+    bp_wall.base_taper = parameters['base_taper']
     bp_wall.base_render_magnet = False
-    bp_wall.base_detail_height = 3
-    bp_wall.base_uneven_height= 4
-    bp_wall.base_peak_count = (9,10)
+    bp_wall.base_detail_height = parameters['base_detail_height']
+    bp_wall.base_uneven_height = parameters['base_uneven_height']
+
+    peak_count = (parameters['base_peak_count']-1,parameters['base_peak_count'])
+    bp_wall.base_peak_count = peak_count
+    bp_wall.base_segments = parameters['base_segments']
 
     bp_wall.render_crystals = True
     bp_wall.crystal_base_width = 20.0
@@ -181,10 +204,15 @@ def __generate_model(parameters):
     bp_wall.make()
 
     crystal_terrain = bp_wall.build()
+    mini_base = bp_wall.mini_base
 
     EXPORT_NAME= 'model_crystal'
     cq.exporters.export(crystal_terrain,f'{EXPORT_NAME}.{export_type}')
     cq.exporters.export(crystal_terrain,'app/static/'+f'{EXPORT_NAME}_{session_id}.stl')
+
+    if mini_base:
+        cq.exporters.export(mini_base,f'mini_base.{export_type}')
+        cq.exporters.export(mini_base,'app/static/'+f'mini_base_{session_id}.stl')
 
 
 
