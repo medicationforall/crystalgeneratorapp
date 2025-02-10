@@ -122,12 +122,8 @@ def __make_tabs():
             'crystals_all'
         )
 
-    #combine tab parameter into one dictionary
-    #parameters:dict = crystal_parameters #| slot_parameters | tab_parameters | rails_parameters | rails_slots_parameters
-    #parameters['export_type'] = export_type
-
-    #with tab_code:
-    #    make_code_view(st.session_state)
+    with tab_code:
+        make_code_view(st.session_state)
 
 def __initialize_session():
     if 'init' not in st.session_state:
@@ -254,8 +250,8 @@ def __generate_model(parameters):
         bp_wall.crystal_inset_height = resolve_range(parameters['crystal_inset_height'],0.5)
         bp_wall.crystal_mid_width = resolve_range(parameters['crystal_mid_width'],2.5)
         bp_wall.crystal_mid_height = resolve_range(parameters['crystal_mid_height'],0.5)
-        bp_wall.crystal_top_height = resolve_range(parameters['crystal_top_height'],2.5)
         bp_wall.crystal_top_width = resolve_range(parameters['crystal_top_width'],2.5)
+        bp_wall.crystal_top_height = resolve_range(parameters['crystal_top_height'],2.5)
         bp_wall.crystal_faces = resolve_range(parameters['crystal_faces'],1)
         bp_wall.crystal_intersect = parameters['crystal_intersect']
         

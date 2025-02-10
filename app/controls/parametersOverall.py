@@ -14,6 +14,9 @@
 
 import streamlit as st
 
+def pause_model_update():
+    st.session_state['update_model']=False
+
 def make_overall_parameters():
 
     col1, col2, col3 = st.columns(3)
@@ -76,7 +79,9 @@ def make_overall_parameters():
             "Height",
             key='overall_height',
             help='Variable Range for the height of the crystals',
-            min_value=0,
-            max_value=100,
-            value=(20, 40)
+            min_value=5.0,
+            max_value=100.0,
+            value=(20.0, 40.0),
+            step=0.1,
+            on_change=pause_model_update
         )

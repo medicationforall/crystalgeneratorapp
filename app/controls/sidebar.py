@@ -21,7 +21,7 @@ def make_sidebar():
 '''
 * ![](https://miniforall.com/image/patreon_16x16.png) [Patreon](https://www.patreon.com/medicationforall)
 * 💡 [This Apps Code](https://github.com/medicationforall/crystalgeneratorapp)
-* 📃 [Walkway Documentation](https://github.com/medicationforall/cqterrain/blob/main/documentation/crystal.md)
+* 📃 [API Documentation](https://github.com/medicationforall/cqterrain/blob/main/documentation/crystal.md)
 * 🖥️ [cqterrain](https://github.com/medicationforall/cqterrain)
 * ![](https://miniforall.com/image/favicon-16x16.png) [Mini For All](https://miniforall.com)
 '''

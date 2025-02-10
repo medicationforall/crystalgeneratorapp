@@ -46,8 +46,9 @@ def make_crystal_parameters():
             key='crystal_faces',
             help='Variable Range for the crystal faces.',
             min_value=3,
-            max_value=15,
+            max_value=20,
             value=(5, 10),
+            step=1,
             on_change=pause_model_update
         )
 
@@ -56,9 +57,10 @@ def make_crystal_parameters():
             "random rotate x",
             key='random_rotate_x',
             help='Crystal random rotation x',
-            min_value=-45,
-            max_value=45,
-            value=(-20, 20),
+            min_value=-45.0,
+            max_value=45.0,
+            value=(-20.0, 20.0),
+            step=0.1,
             on_change=pause_model_update
         )
 
@@ -67,9 +69,10 @@ def make_crystal_parameters():
             "random rotate y",
             key='random_rotate_y',
             help='Crystal random rotation y.',
-            min_value=-45,
-            max_value=45,
-            value=(-15, 15),
+            min_value=-45.0,
+            max_value=45.0,
+            value=(-15.0, 15.0),
+            step=0.1,
             on_change=pause_model_update
         )
 
@@ -79,9 +82,10 @@ def make_crystal_parameters():
             "base width",
             key='crystal_base_width',
             help='Variable Range for the crystal base width.',
-            min_value=1,
-            max_value=50,
-            value=(20, 20),
+            min_value=1.0,
+            max_value=40.0,
+            value=(20.0, 20.0),
+            step=0.1,
             on_change=pause_model_update
         )
 
@@ -90,9 +94,10 @@ def make_crystal_parameters():
             "inset width",
             key='crystal_inset_width',
             help='Variable Range for the crystal inset width.',
-            min_value=1,
-            max_value=50,
-            value=(20, 20),
+            min_value=1.0,
+            max_value=40.0,
+            value=(20.0, 20.0),
+            step=0.1,
             on_change=pause_model_update
         )
 
@@ -101,9 +106,10 @@ def make_crystal_parameters():
             "mid width",
             key='crystal_mid_width',
             help='Variable Range for the crystal mid width.',
-            min_value=1,
-            max_value=50,
-            value=(10, 20),
+            min_value=1.0,
+            max_value=40.0,
+            value=(10.0, 20.0),
+            step=0.1,
             on_change=pause_model_update
         )
 
@@ -112,9 +118,10 @@ def make_crystal_parameters():
             "top width",
             key='crystal_top_width',
             help='Variable Range for the crystal top width.',
-            min_value=1,
-            max_value=50,
-            value=(10, 15),
+            min_value=1.0,
+            max_value=40.0,
+            value=(10.0, 15.0),
+            step=0.1,
             on_change=pause_model_update
         )
 
@@ -128,6 +135,7 @@ def make_crystal_parameters():
             min_value=0.5,
             max_value=20.0,
             value=(0.5, 0.5),
+            step=0.1,
             on_change=pause_model_update
         )
 
@@ -139,6 +147,7 @@ def make_crystal_parameters():
             min_value=0.5,
             max_value=20.0,
             value=(1.0, 3.0),
+            step=0.1,
             on_change=pause_model_update
         )
 
@@ -150,6 +159,7 @@ def make_crystal_parameters():
             min_value=0.5,
             max_value=20.0,
             value=(2.0, 5.0),
+            step=0.1,
             on_change=pause_model_update
         )
 
@@ -161,6 +171,7 @@ def make_crystal_parameters():
             min_value=0.5,
             max_value=20.0,
             value=(10.0, 15.0),
+            step=0.1,
             on_change=pause_model_update
         )
 
