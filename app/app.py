@@ -297,7 +297,9 @@ def __generate_model(parameters):
         
 
 def __clean_up_static_files():
-    files = glob.glob("app/static/model_*.stl")
+    stl_files = glob.glob("app/static/*.stl")
+    step_files = glob.glob("app/static/*.step")
+    files = stl_files + step_files
     today = datetime.today()
     #print(files)
     for file_name in files:
