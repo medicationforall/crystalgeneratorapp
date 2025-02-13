@@ -264,11 +264,13 @@ def __generate_model(parameters):
         crystals = bp_wall.crystals
 
         EXPORT_NAME= 'model_crystal'
-        cq.exporters.export(crystal_terrain,'app/static/'+f'{EXPORT_NAME}_{session_id}.{export_type}')
+        if export_type != 'stl':
+            cq.exporters.export(crystal_terrain,'app/static/'+f'{EXPORT_NAME}_{session_id}.{export_type}')
         cq.exporters.export(crystal_terrain,'app/static/'+f'{EXPORT_NAME}_{session_id}.stl')
 
         if mini_base:
-            cq.exporters.export(mini_base,'app/static/'+f'mini_base_{session_id}.{export_type}')
+            if export_type != 'stl':
+                cq.exporters.export(mini_base,'app/static/'+f'mini_base_{session_id}.{export_type}')
             cq.exporters.export(mini_base,'app/static/'+f'mini_base_{session_id}.stl')
 
         if crystals:
@@ -284,8 +286,10 @@ def __generate_model(parameters):
                 if col == 4:
                     row+=1    
 
-            scene = scene.add(crystals.translate((40*2,40,0))) 
-            cq.exporters.export(scene,'app/static/'+f'crystals_all_{session_id}.{export_type}')
+            scene = scene.add(crystals.translate((40*2,40,0)))
+
+            if export_type != 'stl':
+                cq.exporters.export(scene,'app/static/'+f'crystals_all_{session_id}.{export_type}')
             cq.exporters.export(scene,'app/static/'+f'crystals_all_{session_id}.stl')
     else:
         st.session_state['skip_update'] = False
@@ -302,7 +306,7 @@ def __clean_up_static_files():
         modified_date = datetime.fromtimestamp(modified)
         delta = today - modified_date
         #print('total seconds '+str(delta.total_seconds()))
-        if delta.total_seconds() > 1200: # 20 minutes
+        if delta.total_seconds() > 600: # 10 minutes
             #print('removing '+file_name)
             file_path.unlink()
 
